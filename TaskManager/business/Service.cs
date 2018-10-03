@@ -64,6 +64,16 @@ namespace TaskManager.business
             }
         }
 
+         public async Task<List<UserResponseDTO>> GetUsersByNameAsync (string name) {
+            try {
+                return  await this.unitOfWork.UserRepository
+                        .GetUsersAsync (x=> x.NAME.ToLower().Contains(name.ToLower()));
+            } catch (System.Exception ex) {
+                throw new ApplicationException (ex.Message);
+            }
+        }
+
+
         public async Task<UserResponseDTO> GetUserBySequenceAsync (long seq) {
             try {
                 return await this.unitOfWork.UserRepository.GetUsersBySeqUserAsync (seq);

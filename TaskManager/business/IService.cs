@@ -46,6 +46,13 @@ namespace TaskManager.business
         /// <returns>user with specific sequence</returns>
         Task<UserResponseDTO> GetUserBySequenceAsync (long seq);
 
+        /// <summary>
+        /// query to get users with similar name
+        /// </summary>
+        /// <param name="name">name of user</param>
+        /// <returns>list od users</returns>
+        Task<List<UserResponseDTO>> GetUsersByNameAsync (string name);
+
         #endregion
         #region task methods
 
