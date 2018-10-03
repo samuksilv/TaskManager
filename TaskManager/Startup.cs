@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
+// using Swashbuckle.AspNetCore.Swagger;
 using TaskManager.Context;
 
 namespace TaskManager
@@ -49,7 +50,7 @@ namespace TaskManager
                 o=> o.MaxBatchSize(int.MaxValue))
             );
 
-            // Configure Swagger
+            //Configure Swagger
             services.AddSwaggerGen (c => {
                 c.SwaggerDoc ("v1", new Info {
                     Title = "TaskManager API",

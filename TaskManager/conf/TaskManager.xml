@@ -1,0 +1,431 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TaskManager</name>
+    </assembly>
+    <members>
+        <member name="T:TaskManager.business.IService">
+            <summary>
+            Business methods
+            </summary>
+        </member>
+        <member name="M:TaskManager.business.IService.RegisterUserAsync(TaskManager.Entities.EntitiesDTO.userRegisterDTO)">
+            <summary>   
+            save new user on database
+            </summary>
+            <param name="model">user to save</param>
+            <returns>user saved on database</returns>
+        </member>
+        <member name="M:TaskManager.business.IService.DeleteUserAsync(System.Int64)">
+            <summary>
+            delete user from database
+            </summary>
+            <param name="seq">sequence of user</param>
+            <returns>none</returns>
+        </member>
+        <member name="M:TaskManager.business.IService.UpdateRegisterUserAsync(TaskManager.Entities.EntitiesDTO.userRegisterDTO)">
+            <summary>
+            update user on database
+            </summary>
+            <param name="model"></param>
+            <returns>user updated on databse</returns>
+        </member>
+        <member name="M:TaskManager.business.IService.GetUsersAsync">
+            <summary>
+            query to get all users
+            </summary>
+            <returns>list od users</returns>
+        </member>
+        <member name="M:TaskManager.business.IService.GetUserBySequenceAsync(System.Int64)">
+            <summary>
+            query to get one user by sequence value
+            </summary>
+            <param name="seq">sequence of user</param>
+            <returns>user with specific sequence</returns>
+        </member>
+        <member name="M:TaskManager.business.IService.SaveTaskAsync(TaskManager.Entities.EntitiesDTO.TaskDTO)">
+            <summary>
+            save task on database
+            </summary>
+            <param name="model">task to insert</param>
+            <returns>task saved on database</returns>
+        </member>
+        <member name="M:TaskManager.business.IService.DeleteTaskAsync(System.Int64)">
+            <summary>
+            delete task from database
+            </summary>
+            <param name="seq">sequence of task</param>
+            <returns>none</returns>
+        </member>
+        <member name="M:TaskManager.business.IService.UpdateTaskAsync(TaskManager.Entities.EntitiesDTO.TaskDTO)">
+            <summary>
+            update task on database
+            </summary>
+            <param name="model">task to update</param>
+            <returns>task updated on database</returns>
+        </member>
+        <member name="M:TaskManager.business.IService.GetTasksAsync">
+            <summary>
+            query to get task 
+            </summary>
+            <returns>list of tasks</returns>
+        </member>
+        <member name="M:TaskManager.business.IService.GetTaskBySequenceAsync(System.Int64)">
+            <summary>
+            query to get one task by sequence value
+            </summary>
+            <param name="seq">sequence of task</param>
+            <returns>task with specific sequence</returns>
+        </member>
+        <member name="M:TaskManager.business.IService.GetTaskByPeriodAsync(System.DateTime,System.DateTime,System.Int64)">
+            <summary>
+            quey to get task with specific interval of time
+            </summary>
+            <param name="initialDate"> date initial of filter</param>
+            <param name="lastDate">last date of filter</param>
+            <param name="seqUser">sequence of user</param>
+            <returns>list of tasks with specific period</returns>
+        </member>
+        <member name="T:TaskManager.Entities.EntitiesDB.TASK">
+            <summary>
+            query task
+            </summary>
+        </member>
+        <member name="P:TaskManager.Entities.EntitiesDB.TASK.SEQTASK">
+            <summary>
+            sequence of task
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:TaskManager.Entities.EntitiesDB.TASK.SEQUSER">
+            <summary>
+            sequence of user
+            </summary>
+            <value></value>        
+        </member>
+        <member name="P:TaskManager.Entities.EntitiesDB.TASK.DESCRIPTION">
+            <summary>
+            description of task
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:TaskManager.Entities.EntitiesDB.TASK.DATEINITIAL">
+            <summary>
+            date of initiate task
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:TaskManager.Entities.EntitiesDB.TASK.WARNINGTIME">
+            <summary>
+            date to waring user
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:TaskManager.Entities.EntitiesDB.TASK.LOCAL">
+            <summary>
+            local
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:TaskManager.Entities.EntitiesDB.TASK.USER">
+            <summary>
+            user 
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:TaskManager.Entities.EntitiesDB.USER">
+            <summary>
+            query user
+            </summary>
+        </member>
+        <member name="P:TaskManager.Entities.EntitiesDB.USER.SEQUSER">
+            <summary>
+            sequence of user
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:TaskManager.Entities.EntitiesDB.USER.EMAIL">
+            <summary>
+            email of user
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:TaskManager.Entities.EntitiesDB.USER.PASSWORD">
+            <summary>
+            password of user
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:TaskManager.Entities.EntitiesDB.USER.NAME">
+            <summary>
+            name of user
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:TaskManager.Entities.EntitiesDB.USER.DATEREGISTER">
+            <summary>
+            date of user was registered
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:TaskManager.Entities.EntitiesDB.USER.LASTACESS">
+            <summary>
+            last acess of user in application
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:TaskManager.Entities.EntitiesDB.USER.TASK">
+            <summary>
+            list of task 
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:TaskManager.Entities.EntitiesDTO.TaskDTO">
+            <summary>
+            entity to mainpulate tasks
+            </summary>
+        </member>
+        <member name="P:TaskManager.Entities.EntitiesDTO.TaskDTO.DESCRIPTION">
+            <summary>
+            description of task
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:TaskManager.Entities.EntitiesDTO.TaskDTO.DATEINITIAL">
+            <summary>
+            date of initiate task
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:TaskManager.Entities.EntitiesDTO.TaskDTO.WARNINGTIME">
+            <summary>
+            date to waring user
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:TaskManager.Entities.EntitiesDTO.TaskDTO.LOCAL">
+            <summary>
+            local 
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:TaskManager.Entities.EntitiesDTO.TaskDTO.SEQUSER">
+            <summary>
+            sequence of user
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:TaskManager.Entities.EntitiesDTO.userRegisterDTO">
+            <summary>
+            entity to manipulate users
+            </summary>
+        </member>
+        <member name="P:TaskManager.Entities.EntitiesDTO.userRegisterDTO.EMAIL">
+            <summary>
+            email of user
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:TaskManager.Entities.EntitiesDTO.userRegisterDTO.PASSWORD">
+            <summary>
+            password of user
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:TaskManager.Entities.EntitiesDTO.userRegisterDTO.NAME">
+            <summary>
+            name of user
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:TaskManager.Entities.EntitiesDTO.TaskResponseDTO">
+            <summary>
+            query of tasks
+            </summary>
+        </member>
+        <member name="P:TaskManager.Entities.EntitiesDTO.TaskResponseDTO.SEQTASK">
+            <summary>
+            sequence of task
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:TaskManager.Entities.EntitiesDTO.TaskResponseDTO.NAME">
+            <summary>
+            name of user
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:TaskManager.Entities.EntitiesDTO.UserResponseDTO">
+            <summary>
+            query of users 
+            </summary>
+        </member>
+        <member name="P:TaskManager.Entities.EntitiesDTO.UserResponseDTO.SEQUSER">
+            <summary>
+            Sequence of user
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:TaskManager.Entities.EntitiesDTO.UserResponseDTO.EMAIL">
+            <summary>
+            email of user
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:TaskManager.Entities.EntitiesDTO.UserResponseDTO.NAME">
+            <summary>
+            name of user
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:TaskManager.Entities.EntitiesDTO.UserResponseDTO.DATEREGISTER">
+            <summary>
+            date of user was registered
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:TaskManager.Repository.ITaskRepository">
+            <summary>
+            Repository to manipulate the task entities in the database
+            </summary>
+        </member>
+        <member name="M:TaskManager.Repository.ITaskRepository.SaveTaskAsync(TaskManager.Entities.EntitiesDTO.TaskDTO)">
+            <summary>
+            Save new task on database 
+            </summary>
+            <param name="model">model to insert in database</param>
+            <returns>entity saved in the database</returns>  
+        </member>
+        <member name="M:TaskManager.Repository.ITaskRepository.DeleteTaskAsync(System.Int64)">
+            <summary>
+            Delete task on database
+            </summary>
+            <param name="seqTask">sequence of task to delete of database</param>
+            <returns>none</returns>
+        </member>
+        <member name="M:TaskManager.Repository.ITaskRepository.UpdateTaskAsync(TaskManager.Entities.EntitiesDTO.TaskDTO)">
+            <summary>
+            Update task on database
+            </summary>
+            <param name="model">model to Update in database</param>
+            <returns>entity updated in the database</returns>
+        </member>
+        <member name="M:TaskManager.Repository.ITaskRepository.GetTasksAsync(System.Linq.Expressions.Expression{System.Func{TaskManager.Entities.EntitiesDB.TASK,System.Boolean}})">
+            <summary>
+            get list of task from database
+            </summary>    
+            <param>conditions for clause "Where"</param>   
+            <returns>list of tasks in database</returns>
+        </member>
+        <member name="M:TaskManager.Repository.ITaskRepository.GetTasksBySeqUserAsync(System.Int64)">
+            <summary>
+            get task by sequence of user on database
+            </summary>
+            <param name="seqUser">sequence of user</param>
+            <returns>list of tasks in database</returns>
+        </member>
+        <member name="M:TaskManager.Repository.ITaskRepository.GetTasksBySeqTaskAsync(System.Int64)">
+            <summary>
+            get task by sequence of task on database
+            </summary>
+            <param name="seqTask">sequence of task</param>
+            <returns>task with sequence is equals at parameter seqTask </returns>
+        </member>
+        <member name="M:TaskManager.Repository.ITaskRepository.GetTasksByPeriodAsync(System.DateTime,System.DateTime,System.Int64)">
+            <summary>
+            get task by sequence and specific period 
+            </summary>
+            <param name="initialDate"> initial date of tasks</param>
+            <param name="lastDate">last date of tasks</param>
+            <param name="seqUser">sequence of user</param>
+            <returns>tasks of user with specific period</returns>
+        </member>
+        <member name="T:TaskManager.Repository.IUserRepository">
+            <summary>
+            Repository to manipulate the user entity in the database
+            </summary>
+        </member>
+        <member name="M:TaskManager.Repository.IUserRepository.SaveUserAsync(TaskManager.Entities.EntitiesDTO.userRegisterDTO)">
+            <summary>
+            Save new user on database
+            </summary>
+            <param name="model">model to insert in database</param>
+            <returns>entity saved in the database</returns>     
+        </member>
+        <member name="M:TaskManager.Repository.IUserRepository.DeleteUserAsync(System.Int64)">
+            <summary>
+            Delete user on database
+            </summary>
+            <param name="seqUser">sequence of user to delete</param>
+            <returns>none</returns>
+        </member>
+        <member name="M:TaskManager.Repository.IUserRepository.UpdateUserAsync(TaskManager.Entities.EntitiesDTO.userRegisterDTO)">
+            <summary>
+            Update user on database
+            </summary>
+            <param name="model">model to update in database</param>
+            <returns>entity updated in the database</returns>
+        </member>
+        <member name="M:TaskManager.Repository.IUserRepository.GetUsersAsync(System.Linq.Expressions.Expression{System.Func{TaskManager.Entities.EntitiesDB.USER,System.Boolean}})">
+            <summary>
+            get list of user on database
+            </summary>   
+            <param>conditions for clause "Where"</param>    
+            <returns>list of users</returns>
+        </member>
+        <member name="M:TaskManager.Repository.IUserRepository.GetUsersAsync(System.Int32,System.Int32,System.Linq.Expressions.Expression{System.Func{TaskManager.Entities.EntitiesDB.USER,System.Boolean}})">
+            <summary>
+            get list of user on database, with pagination
+            </summary>
+            <param name="pageNo">page number </param>
+            <param name="pageSize">size of page </param>
+            <param name="conditions">conditions for clause "Where"</param>
+            <returns>list of users</returns>
+        </member>
+        <member name="M:TaskManager.Repository.IUserRepository.GetUsersBySeqUserAsync(System.Int64)">
+            <summary>
+            get user by sequence
+            </summary>
+            <param name="seqUser">sequence of user</param>
+            <returns>user with sequence equals parameter seqUser</returns>
+        </member>
+        <member name="T:TaskManager.Repository.TaskRepository">
+            <summary>
+            Repository to manipulate the task entities in the database
+            </summary>
+        </member>
+        <member name="M:TaskManager.Repository.TaskRepository.ConvertResquestDtoToEntityDataBase(TaskManager.Entities.EntitiesDTO.TaskDTO)">
+            <summary>
+            Convert dto to entity task of database
+            </summary>
+            <param name="modelDTO">dto to convert</param>
+            <returns>entity "TASk" of database</returns>
+        </member>
+        <member name="M:TaskManager.Repository.TaskRepository.ConvertEntityDataBaseToResponseDTO(TaskManager.Entities.EntitiesDB.TASK)">
+            <summary>
+            Convert entity of database response dto of task
+            </summary>
+            <param name="modelDB">entity of database to convert</param>
+            <returns>response dto of task </returns>    
+        </member>
+        <member name="T:TaskManager.Repository.UserRepository">
+            <summary>
+            Repository to manipulate the user entity in the database
+            </summary>
+        </member>
+        <member name="M:TaskManager.Repository.UserRepository.ConvertResquestDtoToEntityDataBase(TaskManager.Entities.EntitiesDTO.userRegisterDTO)">
+            <summary>
+            Convert dto to entity user of database
+            </summary>
+            <param name="modelDTO">dto to convert</param>
+            <returns>entity "TASk" of database</returns>
+        </member>
+        <member name="M:TaskManager.Repository.UserRepository.ConvertEntityDataBaseToResponseDTO(TaskManager.Entities.EntitiesDB.USER)">
+            <summary>
+            Convert entity of database response dto of user
+            </summary>
+            <param name="modelDB">entity of database to convert</param>
+            <returns>response dto of user </returns>     
+        </member>
+    </members>
+</doc>
