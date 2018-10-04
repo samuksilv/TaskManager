@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using TaskManager.business;
 using TaskManager.Context;
 using TaskManager.Entities.EntitiesDTO;
@@ -12,7 +13,8 @@ namespace TaskManager.Controllers
    [Route ("api/user")]
     public class UserController : ControllerBase {
         private TaskManagerContext context = null;
-        public UserController (TaskManagerContext ctx) {
+        public UserController (TaskManagerContext ctx, ILogger<UserController> logger ) {
+            logger.LogDebug("User Controller is Running");
             context = ctx;
         }
 
@@ -25,9 +27,12 @@ namespace TaskManager.Controllers
         [ProducesResponseType( 200,Type=typeof(List<UserResponseDTO>))]        
         public async Task<IActionResult> Get () {
             try {
-                return await Task.Run (async () => {
+                return await Task.Run<IActionResult> (async () => {
                     using (IService business = new Service (this.context)) {
-                        return Ok (await business.GetUsersAsync ());
+                        var respose=(await business.GetUsersAsync ());
+                        if(respose.Count==0)
+                            return NotFound();
+                        return Ok(respose);
                     }
                 });
             } catch (Exception ex) {
@@ -43,13 +48,17 @@ namespace TaskManager.Controllers
         [HttpGet]
         [Route("users/{seq}")]
         [ProducesResponseType( 200,Type=typeof(UserResponseDTO))]        
+        [ProducesResponseType( 404,Type=typeof(UserResponseDTO))]        
 
         public async Task<IActionResult> Get(long seq)
         {
             try {
-                return await Task.Run (async () => {
+                return await Task.Run<IActionResult> (async () => {
                     using (IService business = new Service (this.context)) {
-                        return Ok (await business.GetUserBySequenceAsync(seq));
+                        var response= await business.GetUserBySequenceAsync(seq);                        
+                        if(response== null )
+                            return NotFound();                        
+                        return Ok (response);                        
                     }
                 });
             } catch (Exception ex) {
@@ -69,9 +78,12 @@ namespace TaskManager.Controllers
         public async Task<IActionResult> GetByName(string name)
         {
             try {
-                return await Task.Run (async () => {
+                return await Task.Run<IActionResult> (async () => {
                     using (IService business = new Service (this.context)) {
-                        return Ok (await business.GetUsersByNameAsync(name));
+                        var response=(await business.GetUsersByNameAsync(name));
+                         if(response.Count==0 )
+                            return NotFound();                        
+                        return Ok (response);
                     }
                 });
             } catch (Exception ex) {

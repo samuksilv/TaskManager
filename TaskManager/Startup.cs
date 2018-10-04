@@ -65,8 +65,8 @@ namespace TaskManager
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        {               
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -77,6 +77,11 @@ namespace TaskManager
             }
             app.UseMvc ();
             
+            var loggingOptions = this.Configuration.GetSection("Log4NetCore")
+                                               .Get<Log4NetProviderOptions>();
+            loggerFactory.AddLog4Net(loggingOptions);
+
+
             app.UseSwagger ();
             app.UseSwaggerUI (c => {
                 c.SwaggerEndpoint ("/swagger/v1/swagger.json", "Swagger Sample");
