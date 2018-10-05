@@ -9,12 +9,12 @@ namespace TaskManager.business
 {
         public class Service : IService {
         #region Properties  
-        private IUnitOfWork unitOfWork = null;
+        private IUnitOfWork _unitOfWork = null;
         #endregion
         #region Ctor
 
-        public Service (TaskManagerContext context) {
-            this.unitOfWork = new UnitOfWork.UnitOfWork (context);
+        public Service (IUnitOfWork unitOfWork) {
+            this._unitOfWork = unitOfWork;
         }
 
         #endregion
@@ -24,8 +24,8 @@ namespace TaskManager.business
         public async Task<UserResponseDTO> RegisterUserAsync (userRegisterDTO model) {
             try {
                 return await Task.Run (async () => {
-                    var response = await this.unitOfWork.UserRepository.SaveUserAsync (model);
-                    this.unitOfWork.Commit ();
+                    var response = await this._unitOfWork.UserRepository.SaveUserAsync (model);
+                    this._unitOfWork.Commit ();
                     return response;
                 });
             } catch (System.Exception ex) {
@@ -36,8 +36,8 @@ namespace TaskManager.business
         public async Task DeleteUserAsync (long seq) {
             try {
                 await Task.Run (async () => {
-                    await this.unitOfWork.UserRepository.DeleteUserAsync (seq);
-                    this.unitOfWork.Commit ();
+                    await this._unitOfWork.UserRepository.DeleteUserAsync (seq);
+                    this._unitOfWork.Commit ();
                 });
             } catch (System.Exception ex) {
                 throw new ApplicationException (ex.Message);
@@ -47,8 +47,8 @@ namespace TaskManager.business
         public async Task<UserResponseDTO> UpdateRegisterUserAsync (userRegisterDTO model) {
             try {
                 return await Task.Run (async () => {
-                    var response = await this.unitOfWork.UserRepository.UpdateUserAsync (model);
-                    this.unitOfWork.Commit ();
+                    var response = await this._unitOfWork.UserRepository.UpdateUserAsync (model);
+                    this._unitOfWork.Commit ();
                     return response;
                 });
             } catch (System.Exception ex) {
@@ -58,7 +58,7 @@ namespace TaskManager.business
 
         public async Task<List<UserResponseDTO>> GetUsersAsync () {
             try {
-                return await this.unitOfWork.UserRepository.GetUsersAsync ();
+                return await this._unitOfWork.UserRepository.GetUsersAsync ();
             } catch (System.Exception ex) {
                 throw new ApplicationException (ex.Message);
             }
@@ -66,7 +66,7 @@ namespace TaskManager.business
 
          public async Task<List<UserResponseDTO>> GetUsersByNameAsync (string name) {
             try {
-                return  await this.unitOfWork.UserRepository
+                return  await this._unitOfWork.UserRepository
                         .GetUsersAsync (x=> x.NAME.ToLower().Contains(name.ToLower()));
             } catch (System.Exception ex) {
                 throw new ApplicationException (ex.Message);
@@ -76,7 +76,7 @@ namespace TaskManager.business
 
         public async Task<UserResponseDTO> GetUserBySequenceAsync (long seq) {
             try {
-                return await this.unitOfWork.UserRepository.GetUsersBySeqUserAsync (seq);
+                return await this._unitOfWork.UserRepository.GetUsersBySeqUserAsync (seq);
             } catch (System.Exception ex) {
                 throw new ApplicationException (ex.Message);
             }
@@ -88,8 +88,8 @@ namespace TaskManager.business
         public async Task<TaskResponseDTO> SaveTaskAsync (TaskDTO model) {
             try {
                 return await Task.Run (async () => {
-                    var response = await this.unitOfWork.TaskRepository.SaveTaskAsync (model);
-                    this.unitOfWork.Commit ();
+                    var response = await this._unitOfWork.TaskRepository.SaveTaskAsync (model);
+                    this._unitOfWork.Commit ();
                     return response;
                 });
             } catch (System.Exception ex) {
@@ -100,8 +100,8 @@ namespace TaskManager.business
         public async Task DeleteTaskAsync (long seq) {
             try {
                 await Task.Run (async () => {
-                    await this.unitOfWork.TaskRepository.DeleteTaskAsync (seq);
-                    this.unitOfWork.Commit ();
+                    await this._unitOfWork.TaskRepository.DeleteTaskAsync (seq);
+                    this._unitOfWork.Commit ();
                 });
             } catch (System.Exception ex) {
                 throw new ApplicationException (ex.Message);
@@ -111,8 +111,8 @@ namespace TaskManager.business
         public async Task<TaskResponseDTO> UpdateTaskAsync (TaskDTO model) {
             try {
                 return await Task.Run (async () => {
-                    TaskResponseDTO response = await this.unitOfWork.TaskRepository.UpdateTaskAsync (model);
-                    this.unitOfWork.Commit ();
+                    TaskResponseDTO response = await this._unitOfWork.TaskRepository.UpdateTaskAsync (model);
+                    this._unitOfWork.Commit ();
                     return response;
                 });
             } catch (System.Exception ex) {
@@ -122,7 +122,7 @@ namespace TaskManager.business
 
         public async Task<List<TaskResponseDTO>> GetTasksAsync () {
             try {
-                return await this.unitOfWork.TaskRepository.GetTasksAsync ();
+                return await this._unitOfWork.TaskRepository.GetTasksAsync ();
             } catch (System.Exception ex) {
                 throw new ApplicationException (ex.Message);
             }
@@ -130,7 +130,7 @@ namespace TaskManager.business
 
         public async Task<TaskResponseDTO> GetTaskBySequenceAsync (long seq) {
             try {
-                return await this.unitOfWork.TaskRepository.GetTasksBySeqTaskAsync (seq);
+                return await this._unitOfWork.TaskRepository.GetTasksBySeqTaskAsync (seq);
             } catch (System.Exception ex) {
                 throw new ApplicationException (ex.Message);
             }
@@ -138,14 +138,14 @@ namespace TaskManager.business
 
         public async Task<List<TaskResponseDTO>> GetTaskByPeriodAsync (DateTime initialDate, DateTime lastDate, long seqUser) {
             try {
-                return await this.unitOfWork.TaskRepository.GetTasksByPeriodAsync(initialDate, lastDate, seqUser);
+                return await this._unitOfWork.TaskRepository.GetTasksByPeriodAsync(initialDate, lastDate, seqUser);
             } catch (System.Exception ex) {
                 throw new ApplicationException (ex.Message);
             }
         }
 
         public void Dispose () {
-            this.unitOfWork.Dispose ();            
+            this._unitOfWork.Dispose ();            
         }
         #endregion
         #endregion

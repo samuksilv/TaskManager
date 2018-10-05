@@ -12,10 +12,10 @@ namespace TaskManager.Controllers
 {
    [Route ("api/user")]
     public class UserController : ControllerBase {
-        private TaskManagerContext context = null;
-        public UserController (TaskManagerContext ctx, ILogger<UserController> logger ) {
+        private IService _service = null;
+        public UserController (IService service, ILogger<UserController> logger ) {
             logger.LogDebug("User Controller is Running");
-            context = ctx;
+            _service = service;
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace TaskManager.Controllers
         public async Task<IActionResult> Get () {
             try {
                 return await Task.Run<IActionResult> (async () => {
-                    using (IService business = new Service (this.context)) {
+                    using (IService business = _service) {
                         var respose=(await business.GetUsersAsync ());
                         if(respose.Count==0)
                             return NotFound();
@@ -54,7 +54,7 @@ namespace TaskManager.Controllers
         {
             try {
                 return await Task.Run<IActionResult> (async () => {
-                    using (IService business = new Service (this.context)) {
+                    using (IService business = _service) {
                         var response= await business.GetUserBySequenceAsync(seq);                        
                         if(response== null )
                             return NotFound();                        
@@ -79,7 +79,7 @@ namespace TaskManager.Controllers
         {
             try {
                 return await Task.Run<IActionResult> (async () => {
-                    using (IService business = new Service (this.context)) {
+                    using (IService business = _service) {
                         var response=(await business.GetUsersByNameAsync(name));
                          if(response.Count==0 )
                             return NotFound();                        
@@ -102,7 +102,7 @@ namespace TaskManager.Controllers
         public async Task<IActionResult> Post ([FromBody] userRegisterDTO model) {
             try {
                 return await Task.Run (async() => {
-                    using(IService business =new Service(this.context)){                        
+                    using(IService business =_service){                        
                         var response= await business.RegisterUserAsync(model);
                         string url=HttpContext.Request.Host.Value +$"/api/user/users/{response.SEQUSER}";                     
                         Uri urlResponse= new Uri(url );                        
@@ -125,7 +125,7 @@ namespace TaskManager.Controllers
         public async Task<IActionResult> Put ( [FromBody] userRegisterDTO model) {
             try {
                 return await Task.Run (async() => {
-                    using(IService business = new Service(this.context)){                        
+                    using(IService business = _service){                        
                         var response= await business.UpdateRegisterUserAsync( model);
                         string url=HttpContext.Request.Host.Value + $"/api/user/users/{response.SEQUSER}";                     
                         Uri urlResponse= new Uri(url );                        
@@ -148,7 +148,7 @@ namespace TaskManager.Controllers
         public async Task<IActionResult> Delete ( long seq) {
             try {
                 return await Task.Run (async() => {
-                    using(IService business = new Service(this.context)){                        
+                    using(IService business = _service){                        
                        await business.DeleteUserAsync(seq);                      
                         return NoContent();
                     }

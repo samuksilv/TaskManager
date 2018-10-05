@@ -15,8 +15,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
-// using Swashbuckle.AspNetCore.Swagger;
+using TaskManager.business;
 using TaskManager.Context;
+using TaskManager.Repository;
+using TaskManager.UnitOfWork;
 
 namespace TaskManager
 {
@@ -41,7 +43,11 @@ namespace TaskManager
                 Options.EnableForHttps= true;
             });
 
-             services.AddSingleton<IConfiguration>(Configuration);
+            services.AddSingleton<IConfiguration>(Configuration);            
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IService, Service>();   
+            services.AddScoped<ITaskRepository,TaskRepository >();
+            services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();            
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);            
             
@@ -79,8 +85,10 @@ namespace TaskManager
             
             var loggingOptions = this.Configuration.GetSection("Log4NetCore")
                                                .Get<Log4NetProviderOptions>();
+            
             loggerFactory.AddLog4Net(loggingOptions);
 
+            app.UseResponseCompression();
 
             app.UseSwagger ();
             app.UseSwaggerUI (c => {

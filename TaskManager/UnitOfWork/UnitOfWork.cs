@@ -11,6 +11,11 @@ namespace TaskManager.UnitOfWork
         #region Properties        
         private TaskManagerContext _context= null;
         private IDbContextTransaction _transaction ;
+
+        #region Repositories        
+        public ITaskRepository TaskRepository{get;}      
+        public IUserRepository UserRepository{get;}      
+        #endregion
         private bool _disposed;
 
         public IDbContextTransaction Transaction 
@@ -23,45 +28,23 @@ namespace TaskManager.UnitOfWork
                 return _transaction;                
             }
         }
+
         #endregion
 
         #region Ctor
-        public UnitOfWork(TaskManagerContext context)
+        public UnitOfWork(TaskManagerContext context, IUserRepository userRepository, ITaskRepository taskRepository)
         {
-            this._disposed= false;
+            TaskRepository= taskRepository;
+            UserRepository= userRepository;
             this._context= context;
+            this._disposed= false;
             DbContext dbContext = _context as DbContext;
             _transaction = dbContext.Database.CurrentTransaction;
             if (_transaction == null)
                 _transaction = dbContext.Database.BeginTransaction();
         }
             
-        #endregion
-        
-        #region Repositories        
-        private ITaskRepository _taskRepository;
-        public ITaskRepository TaskRepository 
-        {
-            get
-            {
-                if (_taskRepository == null)
-                    _taskRepository = new TaskRepository(this._context);
-
-                return _taskRepository;
-            }
-        }
-        private IUserRepository _userRepository;
-        public IUserRepository UserRepository 
-        {
-            get
-            {
-                if (_userRepository == null)
-                    _userRepository = new UserRepository(this._context);
-
-                return _userRepository;
-            }
-        }
-        #endregion
+        #endregion        
 
         #region Methods        
 
