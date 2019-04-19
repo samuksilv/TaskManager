@@ -16,6 +16,9 @@ steps:
 - script: dotnet build 
 - task: DotNetCoreCLI@2
   inputs:
+    command: 'build'
+    projects: '/Employees.UnitTests/Employees.UnitTests.csproj'
+- task: DotNetCoreCLI@2
+  inputs:
     command: 'test'
-    projects: './Employees.UnitTests/Employees.UnitTests.csproj' --configuration $(buildConfiguration)
-    displayName: 'dotnet build $(buildConfiguration)'
+    projects: '/Employees.UnitTests/Employees.UnitTests.csproj'
