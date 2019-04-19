@@ -13,7 +13,7 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- script: dotnet build 
+- script: dotnet build './Employees.API/Employees.API.csproj'
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
